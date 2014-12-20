@@ -31,6 +31,10 @@ $k = good_query_assoc($sqlKonfirm);
   </style>
   <!-- ____ Load AJAX ____ -->
   <script src="js/custom.js"></script>
+  <script src="js/jquery.mobile.datepicker.js"></script>
+  <script src="js/datepicker.js"></script>
+  <link rel="stylesheet" href="css/jquery.mobile.datepicker.css">
+  <link rel="stylesheet" href="css/jquery.mobile.datepicker.theme.css">
   <body>
   <?php
   include "view/keranjang-checkout-pesanan.html";

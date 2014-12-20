@@ -15,22 +15,25 @@
           <li><a href="keranjang-checkout.php#pembayaran" data-ajax="false">3. Pembayaran</a></li>
         </ul>
         </div><!-- /navbar -->
+
         <?php
-        //cek apakah ada order atas user session ini
+        //--- cek apakah ada order atas user session ini
         if ($sessionJum == 0){
         echo "<h1>Keranjang anda kosong</h1>
         <a href=index.php>Lihat produk</a>";
-        }
-        else{
+        }else{
         ?>
+
         <ul data-role="listview" data-inset="true">
           
           <?php
-          //Load isi keranjang
+          //--- Kalo session ini ada barang di keranjang, di load
+          //--- Load isi keranjang
           $sql = "SELECT * FROM ng_order_tmp a, ng_produk b
-          WHERE a.order_product = b.produk_id
-          and order_session = '".$sessionID."' ORDER BY order_id";
+                  WHERE a.order_product = b.produk_id
+                  and order_session = '".$sessionID."' ORDER BY order_id";
           $isi = good_query($sql);
+          
           while ($d = mysql_fetch_array($isi)) {
           $hargaBrg = $d['produk_price'] * $d['order_jumlah'];
           echo "
@@ -80,6 +83,7 @@
             <input type="submit" class="simpan" value="Simpan" data-theme="b">
           </div>
         </form>
+        
         <?php }//ending kondisi else cek keranjang ?>
       </div>
       <!-- /content -->

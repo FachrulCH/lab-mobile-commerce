@@ -25,4 +25,36 @@ $(document).ready(function(){
 	});
 	return false;
 	});
+
+	$('#sendCC').on('click', function(){
+		if ($('#name').val() == ''){
+			alert("Nama harus diisi");
+			return false;
+		}
+	//var url 	= $('#url').val();
+	var contents = $('#viaCC').serialize();
+		console.log(contents);
+
+	$.ajax({
+		type: "post",
+		url: "model/ajax-pembayarancc.php",
+		data: contents,
+		dataType: 'json',
+		success: function(result){
+			
+			console.log(result);
+			// Cek hasilnya sukses apa ngak
+            if(result.status == 'success') {
+			 	$("#cc").hide(1500);
+			 	$("#token").show(2000);
+			 	$('#transaction_id').val(result.transid);
+			 	$('#amount').val(result.amount);
+			}else{
+				alert("Tidak bisa di proses karena "+result.status);
+			}
+		}
+		
+	});
+	return false;
+	});
 });

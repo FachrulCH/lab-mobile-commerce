@@ -9,7 +9,7 @@
     echo ''
     . '{
                 "payment": {
-                        "transid": "301298347123450928354",
+                        "transid": "111222333444",
                         "cc": "'.$cc.'",
                         "name": "'.$name.'",
                         "expired": "'.$expired.'",

@@ -9,6 +9,7 @@ $sql = "UPDATE ng_order_tmp SET order_cara_pembayaran = '{$metode}'
 $update = good_query($sql);
 
 $_SESSION['metode'] = $metode;
+$_SESSION['totAmount'] = $total;
 
 if (@$_SESSION['insertPesanan'] == false) {
 	

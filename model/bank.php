@@ -7,8 +7,8 @@
  */
 
 function bank_payment($cc, $name, $expired, $amount) {
-    //$url = 'http://localhost/payment/request.php';
-    $url = 'http://192.168.142.1:8080/LabKampus/payment-2014-05-18/request.php';
+    //=== hardcode url file /payment/request.php
+    $url = 'http://localhost:8080/lab-mobile-commerce/payment/request.php';
     $merchant_id = '78910';
     $api_key = '123456';
     $context = array('http' => array('method' => 'POST'));
@@ -21,7 +21,7 @@ function bank_payment($cc, $name, $expired, $amount) {
                 'api_key'=>$api_key
             );
     $output = @file_get_contents($url,null,stream_context_create($context,$params));
-
+    
     if (empty($output))  {
         return 0;
     } else {
