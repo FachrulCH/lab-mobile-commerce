@@ -1,0 +1,12 @@
+<xml>
+	<payment>
+		<transid>301298347123450928354</transid>
+		<cc>0125025003754100</cc>
+		<expired>2017-08-08</expired>
+		<merchantid>8976</merchantid>
+		<currency>IDR</currency>
+		<amount>200000</amount>
+		<status>1</status>
+		<timestamp>20140808121212</timestamp>
+	</payment>
+</xml>

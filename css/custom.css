@@ -1,0 +1,15 @@
+#logo{
+background: url('../img/logo.png') no-repeat;
+width:310px;
+height:80px;
+text-indent:-999px;
+font-size:0px;
+margin:10px auto 0 auto;
+}
+
+.latar {
+	/*background-image:url(../img/bg.gif);*/
+background:url(../img/bg.png);
+box-shadow:  0px 0px 30px 5px rgba(107, 105, 105, 0.3) inset,
+ 0px 0px 0px 1px rgba(107, 105, 105, 0.4) inset;
+}

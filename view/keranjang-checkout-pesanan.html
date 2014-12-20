@@ -1,0 +1,90 @@
+<!-- HALAMAN PESANAN -->
+<div data-role="page" id="pesanan" class="latar">
+  <!-- panel content goes here -->
+  <?php include 'panel.php'; ?>
+  <div data-role="header" data-theme="b">
+    <h1></h1>
+    <a href="#" data-icon="carat-l" data-rel="back" data-theme="b" data-iconshadow="true" class="ui-btn-left"> <span class="ui-btn-text">Back</span>
+    </a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="keranjang-checkout.php#pesanan" class="ui-btn-active">1. Pesanan</a></li>
+          <li><a href="keranjang-checkout.php#konfirmasi" data-ajax="false">2. Konfirmasi</a></li>
+          <li><a href="keranjang-checkout.php#pembayaran" data-ajax="false">3. Pembayaran</a></li>
+        </ul>
+        </div><!-- /navbar -->
+        <?php
+        //cek apakah ada order atas user session ini
+        if ($sessionJum == 0){
+        echo "<h1>Keranjang anda kosong</h1>
+        <a href=index.php>Lihat produk</a>";
+        }
+        else{
+        ?>
+        <ul data-role="listview" data-inset="true">
+          
+          <?php
+          //Load isi keranjang
+          $sql = "SELECT * FROM ng_order_tmp a, ng_produk b
+          WHERE a.order_product = b.produk_id
+          and order_session = '".$sessionID."' ORDER BY order_id";
+          $isi = good_query($sql);
+          while ($d = mysql_fetch_array($isi)) {
+          $hargaBrg = $d['produk_price'] * $d['order_jumlah'];
+          echo "
+          <li><a href='keranjang-checkout-edit.php?id=".$d['order_id']."&warna=".$d['order_warna']."&jum=".$d['order_jumlah']."' class='ui-btn ui-btn-icon-right ui-icon-edit'>
+            <img src='img/produk/".trim($d['produk_img'])."'>
+            <p><b>".$d['produk_name']."</b></p>
+            <p>warna ".$d['order_warna'].", ukuran ".$d['order_ukuran'].", ".$d['order_jumlah']." item @".html_price($d['produk_price'])."</p>
+            <p class='ui-li-aside'>".html_price($hargaBrg)."</p>
+          </a></li>";
+          //penampung harga item
+          $hargaBrgJum[] = $hargaBrg;
+          } //end loop load isi keranjang
+          ?>
+          <li><br/><p class="ui-li-aside"><b>Total Pembelian</b> <?= html_price(array_sum($hargaBrgJum)); ?></p><br/></li>
+        </ul>
+        
+        <h3>Alamat Pengiriman</h3>
+        <hr/>
+        <h3 id="hasil"></h3>
+        <form action="ajax-pengiriman.php" method="POST" id="viaAjax">
+        <input type="hidden" name="url" id="url" value="ajax-pengiriman.php">
+          <div class="ui-body ui-body-a">
+            <div class="ui-field-contain">
+              <label for="email">Email:</label>
+              <input type="text" name="email" id="email" value="<?= @$k['order_email'] ?>" placeholder="Alamat Email">
+            </div>
+            <div class="ui-field-contain">
+              <label for="nama">Nama Lengkap:</label>
+              <input type="text" name="nama" id="nama" value="<?= @$k['order_nama_pembeli'] ?>" placeholder="Nama Pembeli">
+            </div>
+            <div class="ui-field-contain">
+              <label for="noHP">No HP:</label>
+              <input type="text" name="noHP" id="noHP" value="<?= @$k['order_hp'] ?>" placeholder="Nomer Handphone">
+            </div>
+            <div class="ui-field-contain">
+              <label for="alamat">Alamat:</label>
+              <textarea name="alamat" id="alamat" placeholder="Alamat Lengkap"><?= @$k['order_nama_pembeli'] ?></textarea>
+            </div>
+            <div class="ui-field-contain">
+              <label for="kodepos">Kode Pos:</label>
+              <input type="number" name="kodepos" id="kodepos" value="<?= @$k['order_zip'] ?>" placeholder="Kode Pos">
+            </div>
+            <div class="ui-field-contain">
+              <label for="catatan">Catatan:</label>
+              <textarea name="catatan" id="catatan" placeholder="Catatan Tambahan, jika ada"><?= @$k['order_catatan'] ?></textarea>
+            </div>
+            <input type="submit" class="simpan" value="Simpan" data-theme="b">
+          </div>
+        </form>
+        <?php }//ending kondisi else cek keranjang ?>
+      </div>
+      <!-- /content -->
+      <!-- Footer -->
+      <?php include 'footer.php'; ?>
+    </div>
+    <!-- /page one -->
+    <!-- /page halaman -->

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <!-- Header -->
+  <?php include 'header.php'; ?>
+  
+  <body>
+    <!-- Start of first page: #home -->
+    <div data-role="page" id="home" class="latar">
+      <!-- panel content goes here -->
+      <?php include 'panel.php'; ?>
+      <div data-role="header" data-theme="b">
+        <h1></h1>
+        <a href="#" data-icon="carat-l" data-rel="back" data-theme="b" data-iconshadow="true" class="ui-btn-left"> <span class="ui-btn-text">Back</span>
+          </a>
+        </div><!-- /header -->
+      <div role="main" class="ui-content">
+      <div style="text-align:right;">
+      Urutkan 
+      <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="GET">
+      <?php if (@$_GET['filter'] != ''){ 
+              $v = $_GET['filter'];
+              $f = "filter"; 
+            }else{ 
+              $v = $_GET['kategori']; 
+              $f = "kategori";
+            } ?>
+      <input type="hidden" name="<?= $f; ?>" value="<?= $v; ?>">
+      <select name="urutkan" id="urutan" data-mini="true" data-inline="true" onchange="this.form.submit()">
+        <option value="A">A-Z</option>
+        <option value="Z">Z-A</option>
+        <option value="termurah">Murah-mahal</option>
+        <option value="termahal">Mahal-murah</option>
+      </select>
+      </form>
+      </div>
+        <ul data-role="listview" data-inset="true" >
+          <li data-role="list-divider" data-theme="b" >Produk <?= @$_GET['filter'];?> </li>
+
+          <?php
+          //LOAD DATA nya
+            $load = good_query($sql);
+            while ($t = mysql_fetch_array($load)){
+              $hargaBrg = $t['produk_price'];
+              echo "<li>
+                      <a href='produk-detail.php?id={$t['produk_id']}' data-transition='slidedown'> 
+                      <img src='img/produk/{$t['produk_img']}' class='ul-li-thumb'/> 
+                      <h3>{$t['produk_name']}</h3>
+                      <p>{$t['produk_deskripsi']}</p>
+                      <p class='ui-li-aside'>".html_price($hargaBrg)."</p>
+                      </a>
+                    </li>";
+            }
+
+          
+          ?>
+          <!-- <li><a href="produk-detail.php?id="  data-transition="slidedown"> <img src="img/produk/tas-consina-camming-pro.jpg"/> 
+            <h3> Some Bag</h3><p>keterangan detail</p></a></li>
+          <li><a href="produk-detail.php?id="  data-transition="slidedown"> <img src="img/produk/tas-consina-camming-pro.jpg"/> 
+            <h3> Some Bag</h3><p>keterangan detail</p></a></li>
+          <li><a href="produk-detail.php?id="  data-transition="slidedown"> <img src="img/produk/tas-consina-camming-pro.jpg"/> 
+            <h3> Some Bag</h3><p>keterangan detail</p></a></li>
+          <li><a href="produk-detail.php?id="  data-transition="slidedown"> <img src="img/produk/tas-consina-camming-pro.jpg"/> 
+            <h3> Some Bag</h3><p>keterangan detail</p></a></li>
+          <li><a href="produk-detail.php?id="  data-transition="slidedown"> <img src="img/produk/tas-consina-camming-pro.jpg"/> 
+            <h3> Some Bag</h3><p>keterangan detail</p></a></li> -->
+        </ul>
+      </div>
+      <!-- /content -->
+      <!-- Footer -->
+      <?php include 'footer.php'; ?>
+    </div>
+    <!-- /page one -->
+    <!-- /page halaman -->
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!-- HALAMAN KONFIRMASI -->
+<div data-role="page" id="konfirmasi" class="latar">
+  <!-- panel content goes here -->
+  <?php include 'panel.php'; ?>
+  <div data-role="header" data-theme="b">
+    <h1></h1>
+    <a href="#" data-icon="carat-l" data-rel="back" data-theme="b" data-iconshadow="true" class="ui-btn-left"> <span class="ui-btn-text">Back</span>
+    </a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="keranjang-checkout.php#pesanan">1. Pesanan</a></li>
+          <li><a href="keranjang-checkout.php#konfirmasi" class="ui-btn-active">2. Konfirmasi</a></li>
+          <li><a href="keranjang-checkout.php#pembayaran">3. Pembayaran</a></li>
+        </ul>
+        </div><!-- /navbar -->
+        
+        <div class="ui-body ui-body-a">
+          <?php
+          $isiKonfirm = good_query($sqlKonfirm);
+          ?>
+          <table data-role="table" class="ui-responsive table-stroke">
+            <thead>
+              <tr>
+                <th data-priority="1">Produk:</th>
+                <th data-priority="2">Jumlah:</th>
+                <th data-priority="3">Harga:</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <?php
+              while ($m = mysql_fetch_array($isiKonfirm)) {
+              $hargaBrg = $m['produk_price'] * $m['order_jumlah'];
+              echo "<tr>
+                <td><b><i> $m[produk_name]</i></b>
+                  <p>Warna $m[order_warna], Ukuran $m[order_ukuran]</p>
+                </td>
+                <td>$m[order_jumlah]x ".html_price($m['produk_price'])."</td>
+                <td>".html_price($hargaBrg)."</td>
+              </tr>";
+              //penampung harga item
+              $hargaBrgTot[] = $hargaBrg;
+              } //end loop load isi keranjang
+              $totalpembelian = array_sum($hargaBrgTot)+11000; //plus ongkir
+              ?>
+
+              <td></td>
+              <td>Ongkos kirim</td>
+              <td>Rp 11.000</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><b>Total Pembayaran</b></td>
+              <td><?= html_price($totalpembelian) ?></td>
+              <input type="hidden" id="totalpembelian" value="<?= $totalpembelian ?>">
+              <input type="hidden" id="email" value="<?= $m['order_email'] ?>">
+            </tr>
+          </tbody>
+        </table>
+        <hr/>
+        
+        <p><b>Nama Penerima:</b> <?= $k['order_nama_pembeli'] ?></p>
+        <p><b>No Handphone:</b> <?= $k['order_hp'] ?></p>
+        <p><b>Alamat pengiriman:</b> <?= $k['order_alamat'] ?></p>
+        <p><b>Kode Pos:</b> <?= $k['order_zip'] ?></p>
+        <p>
+        <b>Catatan:</b><?= $k['order_catatan'] ?></p>
+        <br/>
+        <div style="text-align: center;">
+        <label for="metode">Metode Pembayaran</label>
+        <select name="metode" id="metode" data-role="slider">
+          <option value="A">ATM</option>
+          <option value="C">CC</option>
+        </select>
+        </div>
+        <button type="button" id="selesai" class="ui-btn ui-btn-b ui-shadow-icon ui-corner-all ui-btn-icon-left ui-icon-shop">Submit Pesanan</button>
+        
+        <script type="text/javascript">
+        $('#selesai').on('click', function(){
+        var metode = $('#metode').val(),
+        totalpembelian = $('#totalpembelian').val(),
+        email = $('#email').val();
+        var kirim = 'metode='+metode+'&totalpembelian='+totalpembelian+'&email='+email;
+        //console.log(metode);
+        $.ajax({
+        type: "post",
+        url: "model/ajax-checkout.php",
+        data: kirim,
+        success: function(result){
+        alert(result);
+        }
+        });
+        });
+        </script>
+
+      </div>
+    </div>
+    <!-- /content -->
+    <!-- Footer -->
+    <?php include 'footer.php'; ?>
+  </div>

@@ -1,0 +1,71 @@
+<!-- HALAMAN PEMBAYARAN -->
+<div data-role="page" id="pembayaran" class="latar">
+  <!-- panel content goes here -->
+  <?php include 'panel.php'; ?>
+  <div data-role="header" data-theme="b">
+    <h1></h1>
+    <a href="#" data-icon="carat-l" data-rel="back" data-theme="b" data-iconshadow="true" class="ui-btn-left"> <span class="ui-btn-text">Back</span>
+    </a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="keranjang-checkout.php#pesanan">1. Pesanan</a></li>
+          <li><a href="keranjang-checkout.php#konfirmasi">2. Konfirmasi</a></li>
+          <li><a href="keranjang-checkout.php#pembayaran" class="ui-btn-active">3. Pembayaran</a></li>
+        </ul>
+        </div><!-- /navbar -->
+        <br/>
+        <h2>Pembayaran</h2>
+        <hr/>
+        
+        <?php
+        //if (isset($_SESSION['metode']) ? $_SESSION['metode'] : 'A' == 'A'){
+        if ($_SESSION['metode'] == 'A'){
+        ?>
+
+        <div class="ui-body ui-body-a">
+          <p><?=$_SESSION['metode'] ?>Terima Kasih telah berbelanja di mobile.naikgunung.com</p>
+          <?php
+          $sqlPb = "SELECT * FROM ng_order WHERE order_session='".$sessionID."' ";
+          $dataPb = good_query_assoc($sqlPb);
+          if ($dataPb['order_cara_pembayaran'] == 'A'){
+          echo "<p>Silahkan lakukan Pembayaran ke Rekening Virtual Account anda</p>";
+          echo "<table data-role='table' class='table-stroke'>
+            <thead>
+              <tr><th data-priority='1'>Nama</th><th data-priority='2'>No VA</th><th data-priority='3'>Jumlah</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Naikgunung</td><td>$dataPb[order_va]</td><td>".html_price($dataPb['order_total'])."</td></tr>
+            </tbody>
+          </table>";
+          }
+
+        }else{
+          ?>
+
+        <form action="payment.php" method="post" name="payment">
+          <div>CC</div><div><input type="text" name="cc" id="cc"></div>
+          <div>Name</div><div><input type="text" name="name" id="name"></div>
+          <div>Expired</div><div><input type="text" name="expired" id="expired"></div>
+          <input type="hidden" name="amount" id="amount" value="6000000">
+          <input type="hidden" name="order_id" id="order_id" value="15">
+         <button type="submit" class="ui-btn ui-btn-b ui-shadow-icon ui-corner-all ui-btn-icon-left ui-icon-shop">Submit Pesanan</button>
+        </form>
+        
+        <?php
+        } //______ End Kondisi Metode
+          ?>
+          
+        </div>
+        <hr/>
+        <p>
+        Barang akan segera kami kirimkan apabila pembayaran anda telah kami konfirmasi.
+        </p>
+        
+        
+      </div>
+      <!-- /content -->
+      <!-- Footer -->
+      <?php include 'footer.php'; ?>
+    </div>
