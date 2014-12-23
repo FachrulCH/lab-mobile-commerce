@@ -34,8 +34,8 @@ if (@$_SESSION['insertPesanan'] == false) {
 
 
 }else{
-//kalo udah pernah ke insert, lakukan update
-	
+
+	//kalo udah pernah ke insert, lakukan update
 	if ($metode == 'A') {
 		echo "Pembayaran anda melalui ATM berhasil terupdate \n
 		Silahkan lanjutkan ke tab menu pembayaran untuk melihat detail informasi pembayaran anda";

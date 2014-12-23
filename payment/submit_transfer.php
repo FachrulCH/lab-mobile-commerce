@@ -69,6 +69,7 @@
 			
 		} else {
 			echo 'TRANSAKSI GAGAL<br/>';
+			echo $response[3];
 			echo '<br/>';
 			echo '<input type="button" onclick="history.back();" value="Kembali"/>';
 		}

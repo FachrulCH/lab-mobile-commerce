@@ -45,7 +45,6 @@
               } //end loop load isi keranjang
               $totalpembelian = array_sum($hargaBrgTot)+11000; //plus ongkir
               ?>
-
               <td></td>
               <td>Ongkos kirim</td>
               <td>Rp 11.000</td>
@@ -65,34 +64,36 @@
         <p><b>No Handphone      :</b> <?= $k['order_hp'] ?></p>
         <p><b>Alamat pengiriman :</b> <?= $k['order_alamat'] ?></p>
         <p><b>Kode Pos          :</b> <?= $k['order_zip'] ?></p>
-        <p><b>Catatan           :</b><?= $k['order_catatan'] ?></p>
+        <p><b>Catatan           :</b> <?= $k['order_catatan'] ?></p>
         
         <br/>
         <div style="text-align: center;">
-        <label for="metode">Metode Pembayaran</label>
-        <select name="metode" id="metode" data-role="slider">
-          <option value="A">ATM</option>
-          <option value="C">CC</option>
-        </select>
+          <label for="metode">Metode Pembayaran</label>
+          <select name="metode" id="metode" data-role="slider">
+            <option value="A">ATM</option>
+            <option value="C">CC</option>
+          </select>
         </div>
         <button type="button" id="selesai" class="ui-btn ui-btn-b ui-shadow-icon ui-corner-all ui-btn-icon-left ui-icon-shop">Submit Pesanan</button>
         
+
+        <!-- Proses AJAX untuk update database flag pembayaran -->
         <script type="text/javascript">
-        $('#selesai').on('click', function(){
-        var metode = $('#metode').val(),
-        totalpembelian = $('#totalpembelian').val(),
-        email = $('#email').val();
-        var kirim = 'metode='+metode+'&totalpembelian='+totalpembelian+'&email='+email;
-        //console.log(metode);
-        $.ajax({
-        type: "post",
-        url: "model/ajax-checkout.php",
-        data: kirim,
-        success: function(result){
-        alert(result);
-        }
-        });
-        });
+          $('#selesai').on('click', function(){
+            var metode = $('#metode').val(),
+            totalpembelian = $('#totalpembelian').val(),
+            email = $('#email').val();
+            var kirim = 'metode='+metode+'&totalpembelian='+totalpembelian+'&email='+email;
+            //console.log(metode);
+          $.ajax({
+            type: "post",
+            url: "model/ajax-checkout.php",
+            data: kirim,
+            success: function(result){
+            alert(result);
+            }
+            });
+          });
         </script>
 
       </div>
