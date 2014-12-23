@@ -39,7 +39,7 @@
                 'trxid'=>$trxid,
                 'timestamp'=>$timestamp,
                 'trxref'=>$trxref,
-                'amount'=>$amount
+                'amountATM'=>$amount
             )
 			);
     $context = array('http' => array(
@@ -63,8 +63,7 @@
 			if ($updateStatus == true){
 				echo "<div>TRANSAKSI BERHASIL</div>";
 				echo "<div>Ref no :".$trxid."</div>";
-				echo "<div>Harap simpan nomor referensi di atas sebagai bukti pembayaran</div>
-						<p>$response[4]</p> <p>$response[5]</p>";	
+				echo "<div>Harap simpan nomor referensi di atas sebagai bukti pembayaran</div>";	
 			}
 			
 		} else {

@@ -4,6 +4,8 @@
     $merchant_id = isset($_POST['merchantid']) ? $_POST['merchantid'] : '';
     $api_key = isset($_POST['apikey']) ? $_POST['apikey'] : '';
 
+//if ($otp == '1234') {
+    
     echo ''
     . '{
                 "otp": {
@@ -13,4 +15,8 @@
                         "timestamp": "'.date("YYmmddHis").'"
                 }
         }';
+//}else{
+    //echo "Salah OTP COY otp = $otp transid =  $transid => ";
+//    print_r($_POST);
+//}
 ?>

@@ -32,7 +32,7 @@ function bank_payment($cc, $name, $expired, $amount) {
 
 function bank_otp($transaction_id, $otp) {
     //$url = 'http://localhost/payment/otp.php';
-    $url = 'http://192.168.142.1:8080/LabKampus/payment-2014-05-18/otp.php';
+    $url = 'http://localhost:8080/lab-mobile-commerce/payment/otp.php';
     $merchant_id = '78910';
     $api_key = '123456';
     $context = array('http' => array('method' => 'POST'));
@@ -47,8 +47,10 @@ function bank_otp($transaction_id, $otp) {
     if (empty($output))  {
         return 0;
     } else {
-        $response = json_decode($output,TRUE);
-        return $response['otp']['status'];
+        //$response = json_decode($output,TRUE);
+       // return $response['otp']['status'];
+        //return 1;
+        return $output;
     }    
 }
 
