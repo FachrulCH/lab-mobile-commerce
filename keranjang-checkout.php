@@ -31,6 +31,15 @@ $k = good_query_assoc($sqlKonfirm);
   </style>
   <link rel="stylesheet" href="css/jquery.mobile.datepicker.css">
   <link rel="stylesheet" href="css/jquery.mobile.datepicker.theme.css">
+  <style type="text/css">
+      .blur-filter {
+          -webkit-filter: blur(2px);
+          -moz-filter: blur(2px);
+          -o-filter: blur(2px);
+          -ms-filter: blur(2px);
+          filter: blur(2px);
+      }
+    </style>
   <body>
   <?php
   include "view/keranjang-checkout-pesanan.html";
