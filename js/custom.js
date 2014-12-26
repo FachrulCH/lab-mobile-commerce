@@ -21,6 +21,14 @@ $(document).ready(function(){
 		/*success: function(result){
 			alert(result);
 		}*/
+		beforeSend: function() {
+                        // This callback function will trigger before data is sent
+            $.mobile.loading('show', {theme:"a", text:"Silahkan tunggu...", textonly:true, textVisible: true}); // This will show ajax spinner
+            },
+        complete: function() {
+                // This callback function will trigger on data sent/received complete
+            $.mobile.loading('hide'); // This will hide ajax spinner
+            },
 		success: function(result){
 			if (url != 'ajax-addproduct.php'){
 				 // close button
@@ -61,6 +69,7 @@ $(document).ready(function(){
                 },
                 afteropen: function () {
                     /* do something */
+                    //window.location = "index.php";
                 }
             }).popup("open");
 
