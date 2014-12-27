@@ -1,10 +1,11 @@
 <?php
 if (isset($_GET['login'])) {
-  //echo "klik login";
-$_SESSION['login'] = true;
-$_SESSION['username'] = 'alul';
+  include_once "model/db_function.php";
+  //Cek user
+  $paswd = md5($_GET['password']);
+  $sql = good_query("SELECT * FROM ng_member WHERE email = '{$_GET['email']}' and password = '{$paswd}' ");
+  $hitung = good_num($sql);
 
-header("Location:index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -14,6 +15,18 @@ header("Location:index.php");
   
   <body>
     <div data-role="page">
+      <?php
+      if (isset($_GET['login'])) {
+        if ($hitung > 0) {
+          $_SESSION['login'] = true;
+          $_SESSION['username'] = $_GET['email'];
+          header("Location:index.php");
+          echo "<script>alert('Berhasil login');</script>";
+        }else{
+          echo "<script>console.log('kaga login hitung={$hitung}'); alert('Login gagal, periksa email dan password')</script>";
+        }
+      }
+      ?>
     <div data-role="header" data-theme="b">
         <h1></h1>
         <a href="#" data-icon="carat-l" data-rel="back" data-theme="b" data-iconshadow="true" class="ui-btn-left"> <span class="ui-btn-text">Back</span>

@@ -24,7 +24,7 @@ include_once 'model/db_function.php';
 $hash = isset($_POST['hash']) ? $_POST['hash'] : '';
 $vanumber = isset($_POST['vanumber']) ? $_POST['vanumber'] : '';
 $trxid = isset($_POST['trxid']) ? $_POST['trxid'] : '';
-$amount = isset($_POST['amount']) ? $_POST['amount'] : '';
+$amountATM = isset($_POST['amountATM']) ? $_POST['amountATM'] : '';
 $timestamp = isset($_POST['timestamp']) ? $_POST['timestamp'] : '';
 $trxref = isset($_POST['trxref']) ? $_POST['trxref'] : '';
 
@@ -37,9 +37,9 @@ $hashchk = md5($params); //bc014a6b00139a4748dd348f33c8ede9
 $va = bank_va($vanumber);
 
 if ($va<>0 && $hash==$hashchk) {
-    if ($va['billamount']==$amount) {
+    if ($va['billamount']==$amountATM) {
         $description = 'Success';
-        $params = array($vanumber, '00', $trxid, $description, 'billamountDB '.$va['billamount'], 'billamountInput '.$amount);
+        $params = array($vanumber, '00', $trxid, $description);
     } else {
         $params = array($vanumber, '99', $trxid, 'Amount incorrect!');
     }

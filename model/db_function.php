@@ -163,4 +163,5 @@ function html_price($num) {
     return $output;
 }
 session_start(); 
+//error_reporting(0);
 ?>

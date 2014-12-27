@@ -42,8 +42,6 @@ $k = good_query_assoc($sqlKonfirm);
     </style>
   <body>
   <?php
-  include "view/keranjang-checkout-pesanan.html";
-  include "view/keranjang-checkout-konfirmasi.html";
   include "view/keranjang-checkout-pembayaran.html";
   ?>
   </body>

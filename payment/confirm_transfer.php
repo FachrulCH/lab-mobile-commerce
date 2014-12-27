@@ -59,11 +59,13 @@
 			<?php 
 			echo "Nama: ".$name."<br/>";
 			$billamounttxt = "Rp ".number_format($billamount, 0, '', '.').",-";
-			echo "Jumlah: ".$billamounttxt."<br/>";
+			$amountAtm = "Rp ".number_format($amount, 0, '', '.').",-";
+			echo "Jumlah tagihan: ".$billamounttxt."<br/>";
+			echo "Jumlah dibayarkan: ".$amountAtm."<br/>";
 			?>
 			<input type="hidden" name="acc" id="acc" value="<?php echo $acc;?>"/>
 			<input type="hidden" name="vanumber" id="vanumber" value="<?php echo $vanumber_resp;?>"/>
-			<input type="hidden" name="amount" id="amount" value="<?php echo $billamount;?>"/>
+			<input type="hidden" name="amount" id="amount" value="<?php echo $amount;?>"/>
 			<input type="hidden" name="trxid" id="trxid" value="<?php echo $trxid;?>"/>
 			<input type="hidden" name="trxref" id="trxref" value="<?php echo $trxref;?>"/>
 			<br/>Kirim? <br/>

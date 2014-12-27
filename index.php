@@ -5,7 +5,7 @@ include_once 'model/db_function.php';
 if (!isset($_SESSION['order_session'])){
  $_SESSION['order_session'] = md5(uniqid('ngunung', true));
  }
- echo "id=$_SESSION[order_session]";
+ //echo "id=$_SESSION[order_session]";
 
 
 ?>

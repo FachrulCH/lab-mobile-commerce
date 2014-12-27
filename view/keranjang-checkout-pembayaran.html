@@ -8,10 +8,14 @@
     </a>
     </div><!-- /header -->
     <div role="main" class="ui-content">
+      <!-- ____ Load AJAX ____ -->
+      <script src="js/custom.js"></script>
+      <script src="js/jquery.mobile.datepicker.js"></script>
+      <script src="js/datepicker.js"></script>
       <div data-role="navbar">
         <ul>
           <li><a href="keranjang-checkout.php#pesanan">1. Pesanan</a></li>
-          <li><a href="keranjang-checkout.php#konfirmasi">2. Konfirmasi</a></li>
+          <li><a href="#" data-rel="back">2. Konfirmasi</a></li>
           <li><a href="keranjang-checkout.php#pembayaran" class="ui-btn-active">3. Pembayaran</a></li>
         </ul>
         </div><!-- /navbar -->
@@ -21,7 +25,7 @@
         
         <?php
         //if (isset($_SESSION['metode']) ? $_SESSION['metode'] : 'A' == 'A'){
-        if ($_SESSION['metode'] == 'A'){
+        if (@$_SESSION['metode'] == 'A'){
         ?>
 
         <div class="ui-body ui-body-a">
@@ -44,26 +48,59 @@
         }else{
           ?>
 
-        <form action="payment.php" method="post" name="payment">
+        <div id="cc">
+        <form action="payment.php" method="post" name="payment" id="viaCC">
           <div>CC</div><div><input type="text" name="cc" id="cc"></div>
           <div>Name</div><div><input type="text" name="name" id="name"></div>
-          <div>Expired</div><div><input type="text" name="expired" id="expired"></div>
-          <input type="hidden" name="amount" id="amount" value="6000000">
+          <div>Tanggal Expired</div><div><input type="text" data-role="date" name="expired" id="expired"></div>
+          <input type="hidden" name="amount" id="amount" value=<?= @$_SESSION['totAmount'] ?>>
           <input type="hidden" name="order_id" id="order_id" value="15">
-         <button type="submit" class="ui-btn ui-btn-b ui-shadow-icon ui-corner-all ui-btn-icon-left ui-icon-shop">Submit Pesanan</button>
+         <button type="submit" class="ui-btn ui-btn-b ui-shadow-icon ui-corner-all ui-btn-icon-left ui-icon-shop" id="sendCC">Submit Pesanan</button>
         </form>
-        
+        </div>
+        <div id="token" style="display: none; margin: 0 auto !important;  width: 30%;">
+          <form action="bank_verify.php" method="post" name="payment" id="OTPinput">
+            <h1>One Time Password</h1>
+            <input type="password" name="otp" id="otp"/>
+            <input type="hidden" name="transaction_id" id="transaction_id" value="<?= @$_SESSION['order_session'] ?>"/>
+            <input type="hidden" name="order_id" id="order_id"/>
+            <input type="hidden" name="amount" id="amount" value="<?= @$_SESSION['totAmount'] ?>"/>
+            <input type="submit" value="Submit" id="submitOTP"/>
+        </form>
+        </div>
+        <script type="text/javascript">
+          $('#submitOTP').on('click',function(){
+            var kirim = $('#OTPinput').serialize();
+            console.log(kirim);
+            
+            $.ajax({
+              type: 'post',
+              url: 'bank_verify.php',
+              data: kirim,
+              dataType: 'json',
+              success: function(result){
+                if (result.otp.status == 1){
+                  alert("Keranjang anda berhasil dibayarkan");
+                }else{
+                  alert("Pembayaran gagal, Kode OTP salah");
+                }
+                console.log(result);
+              }
+
+            });
+            return false;
+          });
+
+
+        </script>
+
         <?php
-        } //______ End Kondisi Metode
+        } //=== End Kondisi Metode
           ?>
           
         </div>
-        <hr/>
-        <p>
-        Barang akan segera kami kirimkan apabila pembayaran anda telah kami konfirmasi.
-        </p>
-        
-        
+
+        <hr/>     
       </div>
       <!-- /content -->
       <!-- Footer -->
