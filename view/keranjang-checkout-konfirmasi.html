@@ -12,7 +12,7 @@
         <ul>
           <li><a href="keranjang-checkout.php#pesanan">1. Pesanan</a></li>
           <li><a href="keranjang-checkout.php#konfirmasi" class="ui-btn-active">2. Konfirmasi</a></li>
-          <li><a href="keranjang-checkout.php#pembayaran">3. Pembayaran</a></li>
+          <li><a href="keranjang-checkout-pembayaran.php" data-ajax="false">3. Pembayaran</a></li>
         </ul>
         </div><!-- /navbar -->
         
@@ -89,9 +89,58 @@
             type: "post",
             url: "model/ajax-checkout.php",
             data: kirim,
+            beforeSend: function() {
+                        // This callback function will trigger before data is sent
+            $.mobile.loading('show', {theme:"b", text:"Silahkan tunggu...", textVisible: true}); // This will show ajax spinner
+            },
+            complete: function() {
+                // This callback function will trigger on data sent/received complete
+            $.mobile.loading('hide'); // This will hide ajax spinner
+            },
             success: function(result){
-            alert(result);
-            }
+            //alert(result);
+               // close button
+              var closeBtn = $('<a href="#" data-rel="back" class="ui-btn-right ui-btn ui-btn-b ui-corner-all ui-btn-icon-notext ui-icon-delete ui-shadow">Close</a>');
+
+              // text you get from Ajax
+              var content = "<p>"+result+"</p>";
+
+              // Popup body - set width is optional - append button and Ajax msg
+              var popup = $("<div/>", {
+                  "data-role": "popup"
+              }).css({
+                  width: $(window).width() / 1.5 + "px",
+                  padding: 5 + "px"
+              }).append(closeBtn).append(content);
+
+              // Append it to active page
+              $.mobile.pageContainer.append(popup);
+
+              // Create it and add listener to delete it once it's closed
+              // open it
+            $("[data-role=popup]").popup({
+                dismissible: false,
+                history: false,
+                theme: "b",
+                /* or a */
+                positionTo: "window",
+                overlayTheme: "b",
+                /* "b" is recommended for overlay */
+                transition: "pop",
+                beforeposition: function () {
+                    $.mobile.pageContainer.pagecontainer("getActivePage")
+                        .addClass("blur-filter");
+                },
+                afterclose: function () {
+                    $(this).remove();
+                    $(".blur-filter").removeClass("blur-filter");
+                },
+                afteropen: function () {
+                    /* do something */
+                    //window.location = "index.php";
+                }
+              }).popup("open");
+              }
             });
           });
         </script>
