@@ -10,6 +10,12 @@
           <hr/>
           <h3 id="hasil"></h3>
 <?php
+//hitung row
+include_once("model/db_function.php");
+$sql = good_query("SELECT * FROM ng_member WHERE email = 'ernest'");
+$hitung = good_num($sql);
+echo "<h1>hasil hitung $hitung</h1>";
+
 /*$today  = date('m/d/Y');
 $input = '07/05/2015';
 $input = date('m/d/Y', strtotime($input));

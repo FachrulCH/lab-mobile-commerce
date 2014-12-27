@@ -22,27 +22,41 @@ if ($_SESSION['login'] != true){
           </a>
         </div><!-- /header -->
       <div role="main" class="ui-content">
-
-        <h3>Histori Payment</h3>
+      <h3>Histori Payment</h3>
         <hr/>
-        <ul data-role="listview" data-inset="true">
-          <li><a href="#">Order no: 123
-            <p>Sabtu, 01-Jan-14, Jumlah pembelian Rp 999.000 </p></a>
-            <p class="ui-li-aside"><i>Belum Dibayar</i></p>
-            </li>
-          <li><a href="#">Order no: 123
-            <p>Sabtu, 01-Jan-14, Jumlah pembelian Rp 999.000 </p></a>
-            <p class="ui-li-aside"><i>Pembayaran Kurang</i></p>
-            </li>
-          <li><a href="#">Order no: 124
-            <p>Sabtu, 01-Jan-14, Jumlah pembelian Rp 999.000 </p></a>
-            <p class="ui-li-aside"><i>Belum Dikirim NG</i></p>
-            </li>
-          <li><a href="#">Order no: 123
-            <p>Sabtu, 01-Jan-14, Jumlah pembelian Rp 999.000 </p></a>
-            <p class="ui-li-aside"><i>Trx Sukses</i></p>
-            </li>
-        </ul>
+
+<?php 
+  include_once "model/db_function.php";
+  //Cek user
+  $sql = "SELECT a.order_session, sum(b.order_product) total, a.order_total order_total, a.order_time,a.order_id,
+          case a.order_paid when 1 then 'Terbayar' 
+            else 'Belum Dibayar' 
+          end flag 
+          FROM ng_order a, ng_order_tmp b
+          where a.order_session = b.order_session
+          and a.order_member = '{$_SESSION['username']}'
+          group by a.order_session";
+  
+  $doSql = good_query($sql);
+  $hitung = good_num($doSql);
+
+  if ($hitung > 0) {
+    echo "<ul data-role='listview' data-inset='true'>";
+
+    while ($d = mysql_fetch_array($doSql)) {
+      $tgl = date('d M Y', strtotime($d['order_time']) );
+?>
+          <li><a href="#">Order "NG<?= $d['order_id'] ?>"
+            <p>Tanggal <?= $tgl ?>, Jumlah pembelian <?= $d['total'] ?> pcs, total Rp.<?= $d['order_total'] ?></p></a>
+            <p class="ui-li-aside"><i><?= $d['flag'] ?></i></p>
+          </li>
+<?php
+    } //end while
+    echo "</ul>";
+  }else{
+    echo "Anda tidak memiliki Histori order";
+  }
+?>
       </div>
       <!-- /content -->
       <!-- Footer -->

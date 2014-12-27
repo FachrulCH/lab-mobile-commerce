@@ -20,7 +20,7 @@
         <div class="ui-body ui-body-a">
           <form action="" method="POST" id="viaAjax">
             <label for="email">Email</label>
-            <input type="text" name="email" id="email">
+            <input type="email" name="email" id="email">
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
             <label for="namalengkap">Nama Lengkap</label>
