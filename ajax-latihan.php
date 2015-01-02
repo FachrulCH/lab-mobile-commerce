@@ -30,6 +30,8 @@ $today    = date('m/d/Y');
 $today    =strtotime($today);
 
 $input    = '12/01/2014';
+$conv     = date('Y/m/d', strtotime($input));
+echo "<h1>$conv</h1>";
 $input    =strtotime($input);
 if ($input > $today){
   echo "$input > $today";

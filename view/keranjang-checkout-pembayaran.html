@@ -71,21 +71,31 @@
         <script type="text/javascript">
           $('#submitOTP').on('click',function(){
             var kirim = $('#OTPinput').serialize();
-            console.log(kirim);
+            console.log("yg dikirim: "+kirim);
             
             $.ajax({
-              type: 'post',
+              type: 'POST',
               url: 'bank_verify.php',
               data: kirim,
               dataType: 'json',
+              beforeSend: function() {
+              // This callback function will trigger before data is sent
+              $.mobile.loading('show', {theme:"b", text:"Sedang dikonfirmasi...", textVisible: true}); // This will show ajax spinner
+              },
+              complete: function() {
+              // This callback function will trigger on data sent/received complete
+              $.mobile.loading('hide'); // This will hide ajax spinner
+              },
               success: function(result){
                 if (result.otp.status == 1){
                   alert("Keranjang anda berhasil dibayarkan");
+                  window.location = "index.php";
                 }else{
                   alert("Pembayaran gagal, Kode OTP salah");
                 }
-                console.log(result);
+                console.log(result.otp);
               }
+              
 
             });
             return false;
