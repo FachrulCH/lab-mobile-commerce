@@ -37,7 +37,8 @@
           while ($d = mysql_fetch_array($isi)) {
           $hargaBrg = $d['produk_price'] * $d['order_jumlah'];
           echo "
-          <li><a href='keranjang-checkout-edit.php?id=".$d['order_id']."&warna=".$d['order_warna']."&jum=".$d['order_jumlah']."' class='ui-btn ui-btn-icon-right ui-icon-edit'>
+          <li>
+          <a href='keranjang-checkout-edit.php?id=".$d['order_id']."' class='ui-btn ui-btn-icon-right ui-icon-edit data-ajax='false'>
             <img src='img/produk/".trim($d['produk_img'])."'>
             <p><b>".$d['produk_name']."</b></p>
             <p>warna ".$d['order_warna'].", ukuran ".$d['order_ukuran'].", ".$d['order_jumlah']." item @".html_price($d['produk_price'])."</p>
