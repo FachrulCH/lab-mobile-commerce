@@ -163,5 +163,37 @@ function html_price($num) {
     return $output;
 }
 session_start(); 
+
+function cekNull($variabel, $n=NULL){
+     return isset($variabel) ? $variabel : $n;
+}
+
+function getSession(){
+    return @$_SESSION['order_session'];
+}
+
+function cekLogin(){
+    return cekNull(@$_SESSION['username'],'non');
+}
+
+function updateKeranjang($session, $id, $warna, $ukuran, $jumlah){
+     $sql = "UPDATE ng_order_tmp 
+            SET order_warna = '{$warna}', 
+                order_ukuran = '{$ukuran}', 
+                order_jumlah = '{$jumlah}' 
+            where order_session = '{$session}' and order_id ='{$id}' ";
+    $update = good_query($sql);
+    //$update = "session=$session, id=$id, warna=$warna, ukuran=$ukuran, jumlah=$jumlah";
+
+    return $update; //1= true Sukses, 0= false Gagal
+}
+
+function hapusKeranjang($session, $id){
+    $sql = "DELETE FROM ng_order_tmp 
+            where order_session = '{$session}' and order_id ='{$id}' ";
+    $delete = good_query($sql);
+    return $delete;
+}
+
 //error_reporting(0);
 ?>

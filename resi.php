@@ -49,4 +49,4 @@ $total 	= html_price($_GET['t'])."<br/>";
 			<!-- /page halaman -->
 		</body>
 	</html>
-	<? ob_flush(); ?>
+	<? ob_flush();?>

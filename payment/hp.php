@@ -1,6 +1,7 @@
 <?php
+session_start();
     $hp = isset($_GET['no']) ? $_GET['no'] : '';
-    $rp = isset($_GET['rp']) ? $_GET['rp'] : '';
+    $rp = isset($_GET['rp']) ? $_GET['rp'] : @$_SESSION['totAmount'];
     $otp = '1234';
 
 	if ($rp<>'') {

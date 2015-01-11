@@ -52,6 +52,16 @@
         </ul>
         <!-- ____ Load AJAX ____ -->
         <script src="js/custom.js"></script>
+        <?php
+        $ceklogin = cekLogin();
+        if (trim($ceklogin) == 'non'){
+          echo "  <p>Anda belum terdaftar</p>
+                  <p>Silahkan daftar agar bisa melihat history belanja anda, atau isi alamat pengiriman saja tanpa mendaftar</p>";
+        }else{
+          //echo "cek = $ceklogin";
+        }
+        ?>
+        
         <h3>Alamat Pengiriman</h3>
         <hr/>
         <h3 id="hasil"></h3>
@@ -64,7 +74,7 @@
             </div>
             <div class="ui-field-contain">
               <label for="nama">Nama Lengkap:</label>
-              <input type="text" name="nama" id="nama" value="<?= @$k['order_nama_pembeli'] ?>" placeholder="Nama Pembeli">
+              <input type="text" name="nama" id="nama" value="<?= @$k['order_nama_pembeli'] ?>" placeholder="Nama Penerima">
             </div>
             <div class="ui-field-contain">
               <label for="noHP">No HP:</label>
@@ -79,7 +89,7 @@
               <input type="number" name="kodepos" id="kodepos" value="<?= @$k['order_zip'] ?>" placeholder="Kode Pos">
             </div>
             <div class="ui-field-contain">
-              <label for="catatan">Catatan:</label>
+              <label for="catatan">Catatan Pengiriman:</label>
               <textarea name="catatan" id="catatan" placeholder="Catatan Tambahan, jika ada"><?= @$k['order_catatan'] ?></textarea>
             </div>
             <input type="submit" class="simpan" value="Simpan" data-theme="b">

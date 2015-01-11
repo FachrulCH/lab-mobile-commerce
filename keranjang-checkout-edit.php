@@ -1,7 +1,6 @@
 <?php
 include_once "model/db_function.php";
 
-$session  = @$_SESSION['order_session'];
 $idbrg    = (int) $_GET['id'];
 
 //=== Load Data
@@ -35,7 +34,10 @@ $data = good_query_assoc($sql);
           <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
           <img class="popphoto" src="<?php echo "img/produk/$data[produk_img]"?>" style="max-height:512px;" alt="
           <?= $data['produk_name']?>"></div>
-        <form action="#" method="POST" id="editKeranjang">
+
+      <form action="model/updateKeranjang.php" method="GET" id="editKeranjang" data-ajax="false">
+        <input type="hidden" name="order_id" value="<?= $data['order_id']; ?>">
+        
         <table data-role="table" class="ui-responsive table-stroke">
         <thead>
           <tr>
@@ -67,7 +69,7 @@ $data = good_query_assoc($sql);
             $warna = explode(',', $data['produk_colour'])
           ?>
           <td>
-            <select name="selectWarna" data-mini="true" data-inline="true" data-theme="b">
+            <select name="warna" data-mini="true" data-inline="true" data-theme="b">
           
           <?php
             $i = 0;
@@ -89,7 +91,7 @@ $data = good_query_assoc($sql);
             if($data['produk_size'] != ''){
           ?>
             <td>
-              <select name="selectUkuran" data-mini="true" data-inline="true" data-theme="b">
+              <select name="ukuran" data-mini="true" data-inline="true" data-theme="b">
                 <option value="S">S</option>
                 <option value="M" selected="">M</option>
                 <option value="L">L</option>
@@ -98,7 +100,7 @@ $data = good_query_assoc($sql);
             </td>
           <?php } /// *** End kondisi produk_size ?>
             <td>
-              <select name="selectJumlah" data-mini="true" data-inline="true" data-theme="b">
+              <select name="jumlah" data-mini="true" data-inline="true" data-theme="b">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -106,15 +108,13 @@ $data = good_query_assoc($sql);
                 <option value="5">5</option>
               </select>
             </td>
-
           </tr>
         </tbody>
         </table>
         <hr/>
-        <button type="submit" id="update" class="ui-shadow ui-btn ui-btn-b ui-corner-all ui-btn-icon-left ui-icon-action">Update</button>
-        <button type="submit" id="delete" class="ui-shadow ui-btn ui-btn-b ui-corner-all ui-btn-icon-left ui-icon-delete" 
-          onclick="if (confirm(&quot;Yakin akan menghapus dari keranjang?&quot;)) { document.editKeranjang.submit(); } event.returnValue = false; return false;">Delete</button>
-            
+        <button type="submit" id="update" value="update" class="ui-shadow ui-btn ui-btn-b ui-corner-all ui-btn-icon-left ui-icon-action">Update</button>
+        <a href="model/updateKeranjang.php?do=delete&order_id=<?= $data['order_id'] ?>" class="ui-shadow ui-btn ui-btn-b ui-corner-all ui-btn-icon-left ui-icon-delete" 
+          onClick="return confirm('Apakah anda yakin menghapusnya?')" data-ajax="false">Delete</a>
       </form>
       </div>
       <!-- /content -->
