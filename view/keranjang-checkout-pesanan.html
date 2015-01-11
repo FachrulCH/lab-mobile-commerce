@@ -37,7 +37,8 @@
           while ($d = mysql_fetch_array($isi)) {
           $hargaBrg = $d['produk_price'] * $d['order_jumlah'];
           echo "
-          <li><a href='keranjang-checkout-edit.php?id=".$d['order_id']."&warna=".$d['order_warna']."&jum=".$d['order_jumlah']."' class='ui-btn ui-btn-icon-right ui-icon-edit'>
+          <li>
+          <a href='keranjang-checkout-edit.php?id=".$d['order_id']."' class='ui-btn ui-btn-icon-right ui-icon-edit data-ajax='false'>
             <img src='img/produk/".trim($d['produk_img'])."'>
             <p><b>".$d['produk_name']."</b></p>
             <p>warna ".$d['order_warna'].", ukuran ".$d['order_ukuran'].", ".$d['order_jumlah']." item @".html_price($d['produk_price'])."</p>
@@ -51,6 +52,16 @@
         </ul>
         <!-- ____ Load AJAX ____ -->
         <script src="js/custom.js"></script>
+        <?php
+        $ceklogin = cekLogin();
+        if (trim($ceklogin) == 'non'){
+          echo "  <p>Anda belum terdaftar</p>
+                  <p>Silahkan daftar agar bisa melihat history belanja anda, atau isi alamat pengiriman saja tanpa mendaftar</p>";
+        }else{
+          //echo "cek = $ceklogin";
+        }
+        ?>
+        
         <h3>Alamat Pengiriman</h3>
         <hr/>
         <h3 id="hasil"></h3>
@@ -59,15 +70,15 @@
           <div class="ui-body ui-body-a">
             <div class="ui-field-contain">
               <label for="email">Email:</label>
-              <input type="text" name="email" id="email" value="<?= @$k['order_email'] ?>" placeholder="Alamat Email">
+              <input type="email" name="email" id="email" value="<?= @$k['order_email'] ?>" placeholder="Alamat Email">
             </div>
             <div class="ui-field-contain">
               <label for="nama">Nama Lengkap:</label>
-              <input type="text" name="nama" id="nama" value="<?= @$k['order_nama_pembeli'] ?>" placeholder="Nama Pembeli">
+              <input type="text" name="nama" id="nama" value="<?= @$k['order_nama_pembeli'] ?>" placeholder="Nama Penerima">
             </div>
             <div class="ui-field-contain">
               <label for="noHP">No HP:</label>
-              <input type="text" name="noHP" id="noHP" value="<?= @$k['order_hp'] ?>" placeholder="Nomer Handphone">
+              <input type="tel" name="noHP" id="noHP" value="<?= @$k['order_hp'] ?>" placeholder="Nomer Handphone">
             </div>
             <div class="ui-field-contain">
               <label for="alamat">Alamat:</label>
@@ -78,7 +89,7 @@
               <input type="number" name="kodepos" id="kodepos" value="<?= @$k['order_zip'] ?>" placeholder="Kode Pos">
             </div>
             <div class="ui-field-contain">
-              <label for="catatan">Catatan:</label>
+              <label for="catatan">Catatan Pengiriman:</label>
               <textarea name="catatan" id="catatan" placeholder="Catatan Tambahan, jika ada"><?= @$k['order_catatan'] ?></textarea>
             </div>
             <input type="submit" class="simpan" value="Simpan" data-theme="b">

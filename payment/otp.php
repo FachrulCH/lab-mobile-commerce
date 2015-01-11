@@ -3,8 +3,8 @@
     $otp = isset($_POST['otp']) ? $_POST['otp'] : '';
     $merchant_id = isset($_POST['merchantid']) ? $_POST['merchantid'] : '';
     $api_key = isset($_POST['apikey']) ? $_POST['apikey'] : '';
-
-//if ($otp == '1234') {
+    
+if ($otp == 1234) {
     
     echo ''
     . '{
@@ -15,8 +15,16 @@
                         "timestamp": "'.date("YYmmddHis").'"
                 }
         }';
-//}else{
-    //echo "Salah OTP COY otp = $otp transid =  $transid => ";
-//    print_r($_POST);
-//}
+}else{
+    echo '{
+                "otp": {
+                        "transid": "'.$otp.'",
+                        "merchantid": "Gagal",
+                        "status": "0",
+                        "timestamp": ""
+                }
+        }'; 
+        //== status 0 untuk bank.php karena OTP salah
+        //    print_r($_POST);
+}
 ?>

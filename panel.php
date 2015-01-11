@@ -9,12 +9,12 @@ $itung = good_query_assoc($sqlCount);
 <div data-role="panel" id="lainnya" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="a">
   <!-- panel content goes here -->
   <ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Cari produk..." data-inset="true">
-    <li><a href="#">celana-pendek-el-capitan</a></li>
-    <li><a href="#">consina-sleeping-bag-expedition</a></li>
-    <li><a href="#">cooking-set-consina-masterchef-4</a></li>
-    <li><a href="#">jaket-consina-cold-light-4</a></li>
-    <li><a href="#">tas-consina-camming-pro</a></li>
-    <li><a href="#">tas-gadget-molokini-2</a></li>
+    <li><a href="produk-detail.php?id=4">TENDA CONSINA MAGNUM 6</a></li>
+    <li><a href="produk-detail.php?id=47">SLEEPING BAG KARRIMOR</a></li>
+    <li><a href="produk-detail.php?id=29">Jam Tangan Outdoor SUNROAD - 802A</a></li>
+    <li><a href="produk-detail.php?id=1">TAS CONSINA - SIERRA NEVADA 40</a></li>
+    <li><a href="produk-detail.php?id=46">Consina - Camping Tool Set</a></li>
+    <li><a href="produk-detail.php?id=42">Overboard Waterproof Earphones</a></li>
   </ul>
   <ul data-role="listview" data-inset="true" class="ui-body-b ui-shadow-icon">
     <li><a href="index.php" class="ui-icon-home" data-transition="flip">Beranda</a></li>

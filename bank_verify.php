@@ -37,8 +37,13 @@ if ($user_id=='') {
     $amount = isset($_POST['amount']) ? $_POST['amount'] : '';
     $otp = isset($_POST['otp']) ? $_POST['otp'] : '';
     
+    //$request = bank_otp($transaction_id, $otp);
     $request = bank_otp($transaction_id, $otp);
-    if ($request != 0) {
+    //== Remark #1 kondisi, karena pengecekan berhasil tidaknya udah ada di status pd bank.php
+    //#1 if ($request != 0) {
+        //== return 1 => Sukses
+        //== Update flag paidnya
+
         /*$data = array(
                     'id'=>$order_id,
                     'amount'=>$amount,
@@ -50,8 +55,8 @@ if ($user_id=='') {
         }*/
         //$balikan = 1;// array('status' => 1);
         echo $request ; //echo json_decode($balikan);
-    } else {
+    //#1 } else {
         //$balikan = 0;//array('status' => 0);
-        echo $request ; //echo json_decode($balikan);
-    }
+    //#1    echo $request ; //echo json_decode($balikan);
+    //#1 }
 }

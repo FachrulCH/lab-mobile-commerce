@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+include_once "model/db_function.php";
 if ($_SESSION['login'] != true){
   //echo $_SESSION['login'];
   header("location:login.php");
@@ -26,10 +26,10 @@ if ($_SESSION['login'] != true){
         <hr/>
 
 <?php 
-  include_once "model/db_function.php";
+
   //Cek user
-  $sql = "SELECT a.order_session, sum(b.order_product) total, a.order_total order_total, a.order_time,a.order_id,
-          case a.order_paid when 1 then 'Terbayar' 
+  $sql = "SELECT a.order_session, sum(b.order_jumlah) total, a.order_total order_total, a.order_time,a.order_id,
+          case a.order_paid when 1 then 'Lunas & Barang belum dikirimkan' 
             else 'Belum Dibayar' 
           end flag 
           FROM ng_order a, ng_order_tmp b
@@ -46,8 +46,8 @@ if ($_SESSION['login'] != true){
     while ($d = mysql_fetch_array($doSql)) {
       $tgl = date('d M Y', strtotime($d['order_time']) );
 ?>
-          <li><a href="#">Order "NG<?= $d['order_id'] ?>"
-            <p>Tanggal <?= $tgl ?>, Jumlah pembelian <?= $d['total'] ?> pcs, total Rp.<?= $d['order_total'] ?></p></a>
+          <li><a href="#">Kode booking "NG<?= $d['order_id'] ?>"
+            <p>Tanggal <?= $tgl ?>, Jumlah pembelian <?= $d['total'] ?> pcs, total <?= html_price($d['order_total']) ?></p></a>
             <p class="ui-li-aside"><i><?= $d['flag'] ?></i></p>
           </li>
 <?php

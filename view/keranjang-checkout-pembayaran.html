@@ -29,12 +29,14 @@
         ?>
 
         <div class="ui-body ui-body-a">
-          <p><?=$_SESSION['metode'] ?>Terima Kasih telah berbelanja di mobile.naikgunung.com</p>
+          
           <?php
           $sqlPb = "SELECT * FROM ng_order WHERE order_session='".$sessionID."' ";
           $dataPb = good_query_assoc($sqlPb);
           if ($dataPb['order_cara_pembayaran'] == 'A'){
-          echo "<p>Silahkan lakukan Pembayaran ke Rekening Virtual Account anda</p>";
+          echo "<p>Terima Kasih telah berbelanja di mobile.naikgunung.com</p>
+          <p>Bukti pemesanan anda telah kami kirimkan ke email anda, <a href=\"resi.php?va=$dataPb[order_va]&t=$dataPb[order_total]\">klik disini</a> untuk melihatnya</p>
+          <p>Silahkan lakukan Pembayaran ke Rekening Virtual Account anda</p>";
           echo "<table data-role='table' class='table-stroke'>
             <thead>
               <tr><th data-priority='1'>Nama</th><th data-priority='2'>No VA</th><th data-priority='3'>Jumlah</th></tr>
@@ -71,21 +73,31 @@
         <script type="text/javascript">
           $('#submitOTP').on('click',function(){
             var kirim = $('#OTPinput').serialize();
-            console.log(kirim);
+            console.log("yg dikirim: "+kirim);
             
             $.ajax({
-              type: 'post',
+              type: 'POST',
               url: 'bank_verify.php',
               data: kirim,
               dataType: 'json',
+              beforeSend: function() {
+              // This callback function will trigger before data is sent
+              $.mobile.loading('show', {theme:"b", text:"Sedang dikonfirmasi...", textVisible: true}); // This will show ajax spinner
+              },
+              complete: function() {
+              // This callback function will trigger on data sent/received complete
+              $.mobile.loading('hide'); // This will hide ajax spinner
+              },
               success: function(result){
                 if (result.otp.status == 1){
                   alert("Keranjang anda berhasil dibayarkan");
+                  window.location = "index.php";
                 }else{
                   alert("Pembayaran gagal, Kode OTP salah");
                 }
-                console.log(result);
+                console.log(result.otp);
               }
+              
 
             });
             return false;
